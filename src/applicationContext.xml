@@ -9,7 +9,7 @@
 	<!-- 基于注解方式自动装配 -->
 	<context:component-scan base-package="org.rubik.demo" />
 	
-	<!-- 数据源及事务 -->
+	<!-- 原数据源 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close" abstract="false" scope="singleton">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
@@ -25,10 +25,27 @@
 		<property name="maxStatementsPerConnection" value="0" />
 		<property name="idleConnectionTestPeriod" value="30" />	
 	</bean>
+	<!-- 目标数据源 -->
+	<bean id="dataSource0" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close" abstract="false" scope="singleton">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/batchdata" />
+		<property name="user" value="root" />
+		<property name="password" value="123456" />
+		<property name="checkoutTimeout" value="30000" />
+		<property name="maxIdleTime" value="120" />
+		<property name="maxPoolSize" value="100" />
+		<property name="minPoolSize" value="2" />
+		<property name="initialPoolSize" value="2" />
+		<property name="maxStatements" value="0" />
+		<property name="maxStatementsPerConnection" value="0" />
+		<property name="idleConnectionTestPeriod" value="30" />	
+	</bean>
+	<!-- writer的持久化模板 -->
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
+	<!-- writer的事务管理 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
