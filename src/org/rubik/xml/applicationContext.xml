@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="app" class="org.rubik.xml.XmlUtils">
+        <property name="marshaller" ref="jaxbMarshaller" />
+        <property name="unmarshaller" ref="jaxbMarshaller" />
+    </bean>
+
+    <bean id="jaxbMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="classesToBeBound">
+            <list>
+                <value>org.rubik.xml.Settings</value>
+            </list>
+        </property>
+        <property name="schema" value="classpath:org/springframework/oxm/config/spring-oxm-3.0.xsd"/>
+    </bean>
+
+
+    <!--
+
+    <bean id="xStreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+        <property name="aliases">
+            <props>
+                <prop key="settings">org.rubik.xml.Settings</prop>
+            </props>
+        </property>
+        <property name="supportedClasses" value="org.rubik.util.Settings"/>
+    </bean>
+
+    <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller">
+        <property name="mappingLocation" value="classpath:org/rubik/xml/mapping.xml" />
+    </bean>
+
+
+
+
+    <bean id="jixbMarshaller" class="org.springframework.oxm.jibx.JibxMarshaller">
+        <property name="targetClass" value="org.rubik.util.Settings" />
+    </bean>
+
+    -->
+
+</beans>
